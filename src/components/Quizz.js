@@ -1,20 +1,18 @@
 import React, { useEffect } from 'react'
 import Questions from './Questions'
-
-// Redux store import
 import { useSelector, useDispatch } from 'react-redux'
 import { moveToNextQuestion, moveToPrevQuestion } from '../hooks/FetchQuestion'
-import { moveToPrevAction } from '../redux/question_reducer'
+import { pushingAnswer } from '../hooks/setNatija'
 
 export default function Quizz() {
 
+  const state = useSelector((state) => state)
   const {queue, trace} = useSelector((state) => state.questions)
-  // const trace = useSelector((state) => state.questions.trace)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log(queue, trace)
+    console.log(state)
   })
 
   // Btns handling
@@ -26,6 +24,8 @@ export default function Quizz() {
     if(trace < queue.length) {
       // Increment initialState's trace value to move to next question 
       dispatch(moveToNextQuestion())
+      // Push answer 
+      dispatch(pushingAnswer(1))
     }
 
   }

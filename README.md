@@ -1,1 +1,1 @@
-# MERN Stack Quiz Application (Clien Side)
+# MERN Stack Quiz Application (Client Side)
