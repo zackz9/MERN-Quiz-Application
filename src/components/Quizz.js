@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Questions from './Questions'
 
+// Redux store import 
+import {useSelector} from 'react-redux'
+
 export default function Quizz() {
+
+    const state = useSelector(state => state)
+
+    useEffect(() => {
+        console.log(state);
+    })
+
+
   // Btns handling
   function onNext() {
     console.log('Next click')
