@@ -27,8 +27,13 @@ export default function Quizz() {
     if (trace < queue.length) {
       // Increment initialState's trace value to move to next question
       dispatch(moveToNextQuestion())
-      // Push answer
-      dispatch(pushingAnswer(check))
+
+      // inserting a new val in array only if previous has changed 
+      if(result.length <= trace) {
+ 
+        // Push answer
+        dispatch(pushingAnswer(check))
+      }
     }
   }
   function onPrev() {
