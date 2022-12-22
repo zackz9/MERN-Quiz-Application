@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Questions from './Questions'
 import { useSelector, useDispatch } from 'react-redux'
+import { Navigate } from 'react-router-dom'
 import { moveToNextQuestion, moveToPrevQuestion } from '../hooks/FetchQuestion'
 import { pushingAnswer } from '../hooks/setNatija'
 
@@ -8,13 +9,13 @@ export default function Quizz() {
   // grabbing value from child questions compo
   const [check, setChecked] = useState(undefined)
 
-  const state = useSelector((state) => state)
+  const result = useSelector((state) => state.result.result)
   const { queue, trace } = useSelector((state) => state.questions)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log(state)
+    console.log(result)
   })
 
   // Btns handling
@@ -43,6 +44,11 @@ export default function Quizz() {
   function onChecked(check) {
     console.log(check)
     setChecked(check)
+  }
+
+  // Examinate answers after last question 
+  if(result.length && result.length >= queue.length ) {
+    return <Navigate to={'/result'} replace='true'></Navigate>
   }
 
   return (
