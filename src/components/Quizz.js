@@ -1,17 +1,15 @@
 import React, { useEffect } from 'react'
 import Questions from './Questions'
 
-// Redux store import 
-import {useSelector} from 'react-redux'
+// Redux store import
+import { useSelector } from 'react-redux'
 
 export default function Quizz() {
+  const state = useSelector((state) => state)
 
-    const state = useSelector(state => state)
-
-    useEffect(() => {
-        console.log(state);
-    })
-
+  useEffect(() => {
+    console.log(state)
+  })
 
   // Btns handling
   function onNext() {
@@ -24,7 +22,7 @@ export default function Quizz() {
     <div className='container'>
       <h1 className='title text-light'>Quizz Application</h1>
 
-      <Questions/>
+      <Questions />
 
       <div className='grid'>
         <button className='btn prev' onClick={onPrev}>

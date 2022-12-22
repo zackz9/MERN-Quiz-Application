@@ -10,7 +10,6 @@ export default function Questions() {
 
     useEffect(() => {
         console.log(data);
-        console.log(question);
     })
 
   function onSelect() {
