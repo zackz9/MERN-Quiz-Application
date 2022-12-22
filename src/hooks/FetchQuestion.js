@@ -42,3 +42,25 @@ export const useFetchQuestion = () => {
 
   return [getData, setGetData]
 }
+
+
+// MoveToNext action Disptach func
+export const moveToNextQuestion = () => async(dispatch) => {
+    try {
+        
+        dispatch(Action.moveToNextAction())
+
+    } catch (error) {
+            console.log(error)
+    }
+}
+// MoveToPrev action Disptach func
+export const moveToPrevQuestion = () => async(dispatch) => {
+    try {
+        
+        dispatch(Action.moveToPrevAction())
+
+    } catch (error) {
+            console.log(error)
+    }
+}
