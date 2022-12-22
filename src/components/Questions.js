@@ -8,6 +8,8 @@ import { updateResult } from '../hooks/setNatija'
 export default function Questions({ onChecked }) {
   const [checked, setChecked] = useState(undefined)
   const { trace } = useSelector((state) => state.questions)
+  const result = useSelector((state) => state.result.result)
+
   //Destruct values of array
   const [{ isLoading, apiData, serverError }, setGetData] = useFetchQuestion()
 
@@ -46,7 +48,9 @@ export default function Questions({ onChecked }) {
             <label className='text-primary' htmlFor={`q${i}-option`}>
               {q}
             </label>
-            <div className='check'></div>
+            <div
+              className={`check ${result[trace] == i ? 'checked' : ''}`}
+            ></div>
           </li>
         ))}
       </ul>
