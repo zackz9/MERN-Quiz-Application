@@ -1,8 +1,19 @@
 import React, { useRef } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { setUserId } from '../redux/result_reducer'
 import '../styles/Main.css'
 export default function Main() {
+
   const inputRef = useRef(null)
+  const dispatch = useDispatch()
+
+  function startQuizz() {
+      if(inputRef.current?.value) {
+        dispatch(setUserId(inputRef.current?.value))
+      }
+  }
+
   return (
     <div className='container'>
       <h1 className='title text-light'>Quizz App</h1>
@@ -24,7 +35,7 @@ export default function Main() {
       </form>
 
       <div className='start'>
-        <Link className='btn' to={'quizz'}>
+        <Link className='btn' to={'quizz'} onClick={startQuizz}>
           Start Quizz
         </Link>
       </div>

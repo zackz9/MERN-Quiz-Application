@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import data from '../database/data'
+import data, { answers } from '../database/data'
 
 // Actions
 import * as Action from '../redux/question_reducer'
@@ -25,11 +25,13 @@ export const useFetchQuestion = () => {
 
           if (question.length > 0) {
             setGetData((prev) => ({ ...prev, isLoading: false }));
-            setGetData((prev) => ({ ...prev, apiData: question }));
+            setGetData((prev) => ({ ...prev, apiData: { question, answers } }));
 
             // Dispatch action Call
 
-            dispatch(Action.startExamAction(question))
+            dispatch(Action.startExamAction({ question, answers }))
+
+
           } else {
             throw new Error('No question available !')
           }
@@ -45,22 +47,22 @@ export const useFetchQuestion = () => {
 
 
 // MoveToNext action Disptach func
-export const moveToNextQuestion = () => async(dispatch) => {
-    try {
-        
-        dispatch(Action.moveToNextAction())
+export const moveToNextQuestion = () => async (dispatch) => {
+  try {
 
-    } catch (error) {
-            console.log(error)
-    }
+    dispatch(Action.moveToNextAction())
+
+  } catch (error) {
+    console.log(error)
+  }
 }
 // MoveToPrev action Disptach func
-export const moveToPrevQuestion = () => async(dispatch) => {
-    try {
-        
-        dispatch(Action.moveToPrevAction())
+export const moveToPrevQuestion = () => async (dispatch) => {
+  try {
 
-    } catch (error) {
-            console.log(error)
-    }
+    dispatch(Action.moveToPrevAction())
+
+  } catch (error) {
+    console.log(error)
+  }
 }

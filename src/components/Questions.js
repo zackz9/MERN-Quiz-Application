@@ -6,6 +6,7 @@ import { useFetchQuestion } from '../hooks/FetchQuestion'
 import { updateResult } from '../hooks/setNatija'
 
 export default function Questions({ onChecked }) {
+  
   const [checked, setChecked] = useState(undefined)
   const { trace } = useSelector((state) => state.questions)
   const result = useSelector((state) => state.result.result)
@@ -13,6 +14,8 @@ export default function Questions({ onChecked }) {
   //Destruct values of array
   const [{ isLoading, apiData, serverError }, setGetData] = useFetchQuestion()
 
+  useSelector(state => console.log(state))
+  
   const questions = useSelector(
     (state) => state.questions.queue[state.questions.trace]
   )
@@ -20,16 +23,18 @@ export default function Questions({ onChecked }) {
 
   useEffect(() => {
     dispatch(updateResult({ trace, checked }))
-  }, [checked])
+  }, [checked, trace, dispatch])
 
   function onSelect(i) {
     onChecked(i)
     setChecked(i)
+    dispatch(updateResult({ trace, checked }))
+
   }
 
   if (isLoading) return <h2 className='text-light'>isLoading</h2>
   if (serverError)
-    return <h2 className='text-light'>serverError || "Unknown error"</h2>
+    return <h2 className='text-light'>{serverError || "Unknown error"}</h2>
 
   return (
     <div className='questions'>
@@ -49,7 +54,7 @@ export default function Questions({ onChecked }) {
               {q}
             </label>
             <div
-              className={`check ${result[trace] == i ? 'checked' : ''}`}
+              className={`check ${result[trace] === i ? 'checked' : ''}`}
             ></div>
           </li>
         ))}

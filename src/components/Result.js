@@ -1,23 +1,37 @@
-import React from 'react'
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import {Link} from 'react-router-dom'
 import '../styles/Result.css'
 import ResultTable from './ResultTable';
 // Call Reset actions 
 import { resetQuestionsAction } from '../redux/question_reducer';
 import { resetResultAction } from '../redux/result_reducer';
-
+import { attempts_number, earnPoints_number, flagResult } from '../helpers/helper';
 
 
 export default function Result() {
 
     const dispatch = useDispatch()
 
+    const { questions: {queue, answers}, result: {result, userId}} = useSelector(state => state)
+
+
+    useEffect(() => {
+      console.log(flag)
+    })
+    
+    const totalPoints = queue.length * 10;
+    const attempts = attempts_number(result)
+    const earnPoints = earnPoints_number(result, answers, 10)
+    const flag = flagResult(totalPoints, earnPoints)
+
+   
+    
     function onRestart() {
         dispatch(resetQuestionsAction());
         dispatch(resetResultAction());
-
     }
+
   return (
     <div className='container'>
       <h1 className='title text-light'>Quizz Application</h1>
@@ -25,32 +39,32 @@ export default function Result() {
       <div className='result flex-center'>
             <div className='flex'>
                 <span>Username</span>
-                <span className='bold'>Zackaria</span>
+                <span className='bold'>{userId || ""}</span>
             </div>
             <div className='flex'>
                 <span>Total Quizz points: </span>
-                <span className='bold'>50</span>
+                <span className='bold'>{totalPoints || 0}</span>
             </div>
             <div className='flex'>
                 <span>Total Questions: </span>
-                <span className='bold'>05</span>
+                <span className='bold'>{ queue.length || 0}</span>
             </div>
             <div className='flex'>
                 <span>Total Attempts: </span>
-                <span className='bold'>04</span>
+                <span className='bold'>{attempts || 0}</span>
             </div>
             <div className='flex'>
                 <span>Total Earn Points: </span>
-                <span className='bold'>50</span>
+                <span className='bold'>{earnPoints || 0}</span>
             </div>
             <div className='flex'>
                 <span>Quizz Result: </span>
-                <span className='bold'>Passed</span>
+                <span style={{color:`${flag ? 'green' : 'red'}`}} className='bold'>{flag ? 'Passed' : 'Failed'}</span>
             </div>
       </div>
 
       <div className='start'>
-        <Link className='btn' to={'/'} onClick={onRestart()}>Restart</Link>
+        <Link className='btn' to={'/'} onClick={onRestart}>Restart</Link>
       </div>
 
       <div className='container'>

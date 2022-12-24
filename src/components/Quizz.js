@@ -14,13 +14,10 @@ export default function Quizz() {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    console.log(result)
-  })
 
   // Btns handling
   function onNext() {
-    console.log('Next click')
+    // console.log('Next click')
 
     // To prevent navigate for inexistant incrementation
 
@@ -35,7 +32,12 @@ export default function Quizz() {
         dispatch(pushingAnswer(check))
       }
     }
+
+    // Reset value only for checked variable 
+    setChecked(undefined)
+
   }
+
   function onPrev() {
     console.log('Prev click')
 
@@ -47,7 +49,6 @@ export default function Quizz() {
   }
 
   function onChecked(check) {
-    console.log(check)
     setChecked(check)
   }
 
