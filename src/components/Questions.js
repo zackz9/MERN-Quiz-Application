@@ -13,12 +13,8 @@ export default function Questions({ onChecked }) {
 
   //Destruct values of array
   const [{ isLoading, apiData, serverError }, setGetData] = useFetchQuestion()
-
-  useSelector(state => console.log(state))
   
-  const questions = useSelector(
-    (state) => state.questions.queue[state.questions.trace]
-  )
+  const questions = useSelector((state) => state.questions.queue[state.questions.trace])
   const dispatch = useDispatch()
 
   useEffect(() => {

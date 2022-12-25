@@ -1,9 +1,7 @@
 // Fetch questions hook to fetch api data and setting value to the store
-
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import data, { answers } from '../database/data'
-
+import { dataFromServer } from '../helpers/helper'
 // Actions
 import * as Action from '../redux/question_reducer'
 
@@ -21,15 +19,18 @@ export const useFetchQuestion = () => {
       // Async func to fetch data
       async () => {
         try {
-          let question = await data
+          // let question = await data
+          const [{ questions, answers }] = await dataFromServer(`${process.env.REACT_APP_SERVER_HOSTNAME}/api/questions`, (data) => data)
 
-          if (question.length > 0) {
+          console.log({ questions, answers })
+
+          if (questions.length > 0) {
             setGetData((prev) => ({ ...prev, isLoading: false }));
-            setGetData((prev) => ({ ...prev, apiData: { question, answers } }));
+            setGetData((prev) => ({ ...prev, apiData: questions }));
 
             // Dispatch action Call
 
-            dispatch(Action.startExamAction({ question, answers }))
+            dispatch(Action.startExamAction({ question: questions, answers }))
 
 
           } else {

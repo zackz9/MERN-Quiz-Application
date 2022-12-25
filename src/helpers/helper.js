@@ -18,9 +18,24 @@ export function flagResult(totalPoints, earnPoints) {
 }
 
 
-/** Checking for user authenticate  */
+// Checking for user authenticate
 export function CheckUserExist({ children }){
     const auth = useSelector(state => state.result.userId)
     return auth ? children : <Navigate to={'/'} replace={true}></Navigate>
 }
 
+// Grab data from server 
+export async function dataFromServer(url, callback) {
+     const data = await (await axios.get(url))?.data;
+     return callback ? callback(data) : data;
+}
+
+//Implement server Data
+export async function postDataServer(url,result, callback) {
+    const data = await (await axios.post(url,result))?.data;
+
+    return callback ? callback(data) : data
+}
+
+
+// dataFromServer('http://localhost:5000/api/result')
