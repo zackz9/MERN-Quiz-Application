@@ -7,6 +7,7 @@ import ResultTable from './ResultTable';
 import { resetQuestionsAction } from '../redux/question_reducer';
 import { resetResultAction } from '../redux/result_reducer';
 import { attempts_number, earnPoints_number, flagResult } from '../helpers/helper';
+import { insertUserResult } from '../hooks/setNatija';
 
 
 export default function Result() {
@@ -16,16 +17,17 @@ export default function Result() {
     const { questions: {queue, answers}, result: {result, userId}} = useSelector(state => state)
 
 
-    useEffect(() => {
-      console.log(flag)
-    })
+    // useEffect(() => {
+    //   console.log(flag)
+    // })
     
     const totalPoints = queue.length * 10;
     const attempts = attempts_number(result)
     const earnPoints = earnPoints_number(result, answers, 10)
     const flag = flagResult(totalPoints, earnPoints)
 
-   
+    // Insert user result 
+    insertUserResult({result, username: userId, attempts, points: earnPoints, achieved: flag ? 'Passed' : 'Failed'})
     
     function onRestart() {
         dispatch(resetQuestionsAction());

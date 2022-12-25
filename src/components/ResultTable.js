@@ -1,6 +1,16 @@
-import React from 'react'
+import React, {useEffect, useState } from 'react'
+import { dataFromServer } from '../helpers/helper'
 
 export default function ResultTable() {
+
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+      dataFromServer(`${process.env.REACT_APP_SERVER_HOSTNAME}/api/result`, (res) => {setData(res)})
+    
+      
+    }, [setData])
+    
   return (
     <div>
         <table>
@@ -13,12 +23,20 @@ export default function ResultTable() {
                 </tr>
             </thead>
             <tbody>
-                <tr className='table-body'>
-                    <td>Zackaria</td>
-                    <td>04</td>
-                    <td>20</td>
-                    <td>Passed</td>
-                </tr>
+
+                {!data ?? <div>No result for this case !</div>}
+
+                {
+                    data.map((value, index) => (
+
+                        <tr className='table-body' key={index}>
+                            <td>{value?.username  || ''}</td>
+                            <td>{value?.attempts || 0}</td>
+                            <td>{value?.earnPoints || 0}</td>
+                            <td>{value?.achieved || 'Hania'}</td>
+                        </tr>
+                    )) 
+                }
             </tbody>
         </table>
     </div>
